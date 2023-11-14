@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 const theme = createTheme({
 	typography: {
 		fontFamily: [
+			'Ubuntu Mono',
 			'Major Mono Display',
 			'monospace',
 			'Quicksand',
@@ -70,12 +71,13 @@ const Home = () => {
 							whileTap={{ scale: 1.5 }}
 							animate={{ scale: 1 }}>
 							<Button
-								variant="outlined"
 								size="large"
 								component={Link}
 								to="/my-profile"
 								color="warning">
-								{'< Learn more about me />'}
+								<Typography fontFamily="Ubuntu Mono">
+									{'< Learn more about me />'}
+								</Typography>
 							</Button>
 						</motion.div>
 					</CardActions>

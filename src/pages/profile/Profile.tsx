@@ -6,22 +6,26 @@ import {
 	CardContent,
 	CardHeader,
 	Chip,
+	Divider,
 	Fab,
 	Fade,
 	Grid,
+	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemText,
+	Popover,
 	Step,
 	StepButton,
 	StepContent,
 	StepLabel,
 	Stepper,
+	Tooltip,
 	Typography,
 	useScrollTrigger
 } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, MouseEvent } from 'react';
 import matrixLayer1 from '../../common/images/matrix-layer-1.png';
 import matrixLayer2 from '../../common/images/matrix-layer-2.png';
 import matrixLayer3 from '../../common/images/matrix-layer-3.png';
@@ -35,11 +39,20 @@ import chaseTransparentWhite from '../../common/images/chaseTransparentWhite.png
 import infiniteSolutionsTransparentWhite from '../../common/images/infiniteSolutionsTransparentWhite.png';
 import { employers, colleges, summary } from '../../common/content';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import EmailIcon from '@mui/icons-material/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import PhoneIcon from '@mui/icons-material/Phone';
+import HomeIcon from '@mui/icons-material/Home';
 import { motion } from 'framer-motion';
 import './Profile.css';
 import Skills from '../../components/skills/Skills';
 import { skills } from '../../common/content';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SocialMediaLinks from '../../components/socialMediaLinks/SocialMediaLinks';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 	const [activeStep, setActiveStep] = useState<number>(0);
@@ -47,6 +60,28 @@ const Profile = () => {
 	const [completed, setCompleted] = useState<{
 		[k: number]: boolean;
 	}>({ 0: true });
+
+	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+	const handleIconClick = (
+		event: MouseEvent<HTMLButtonElement>,
+		iconType: 'phone' | 'email'
+	) => {
+		if (iconType === 'phone') {
+			navigator.clipboard.writeText('2063721407');
+		}
+		if (iconType === 'email') {
+			navigator.clipboard.writeText('u.batsaikhan@gmail.com');
+		}
+		setAnchorEl(event?.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const open = Boolean(anchorEl);
+	const id = open ? 'popover' : undefined;
 
 	const ref = useRef<IParallax>(null);
 
@@ -83,7 +118,11 @@ const Profile = () => {
 			<Parallax
 				ref={ref}
 				pages={4}
-				style={{ width: 'calc(100% - 70px)', marginLeft: 70 }}>
+				style={{
+					width: 'calc(100% - 70px)',
+					marginLeft: 70,
+					position: 'absolute'
+				}}>
 				<motion.div
 					initial={{ scaleY: 0 }}
 					animate={{ scaleY: 1 }}
@@ -550,14 +589,118 @@ const Profile = () => {
 					</Card>
 				</ParallaxLayer>
 			</Parallax>
-			<Box position="absolute" bottom={2} right={2}>
-				<Fade in={trigger}>
-					<Fab
-						onClick={() => ref.current?.scrollTo(0)}
-						sx={{ marginRight: 10, marginBottom: 10 }}>
-						<KeyboardArrowUpIcon fontSize="large" />
-					</Fab>
-				</Fade>
+			<Box
+				position="absolute"
+				height="100%"
+				right={0}
+				display="flex"
+				flexDirection="column">
+				<Grid container height="100%">
+					<Divider
+						orientation="vertical"
+						sx={{
+							'&::before, &::after': {
+								borderColor: 'black'
+							}
+						}}>
+						<Box
+							sx={{
+								display: 'flex',
+								gap: 2,
+								flexDirection: 'column'
+							}}>
+							<motion.div whileHover={{ scale: 1.3 }}>
+								<IconButton
+									aria-describedby={id}
+									onClick={(
+										event: MouseEvent<HTMLButtonElement>
+									) => handleIconClick(event, 'phone')}>
+									<PhoneIcon sx={{ fontSize: 30 }} />
+								</IconButton>
+								<Popover
+									open={open}
+									id={id}
+									anchorEl={anchorEl}
+									onClose={handleClose}
+									anchorOrigin={{
+										vertical: 'center',
+										horizontal: 'right'
+									}}>
+									<Typography sx={{ p: 1 }}>
+										Copied!
+									</Typography>
+								</Popover>
+							</motion.div>
+							<motion.div whileHover={{ scale: 1.3 }}>
+								<IconButton
+									aria-describedby={id}
+									onClick={(
+										event: MouseEvent<HTMLButtonElement>
+									) => handleIconClick(event, 'email')}>
+									<EmailIcon sx={{ fontSize: 30 }} />
+								</IconButton>
+							</motion.div>
+							<motion.div whileHover={{ scale: 1.3 }}>
+								<IconButton
+									LinkComponent="a"
+									target="blank"
+									href="https://www.linkedin.com/in/khan-io/">
+									<LinkedInIcon sx={{ fontSize: 30 }} />
+								</IconButton>
+							</motion.div>
+							<motion.div whileHover={{ scale: 1.3 }}>
+								<IconButton
+									LinkComponent="a"
+									target="blank"
+									href="https://github.com/khan-develops">
+									<GitHubIcon sx={{ fontSize: 30 }} />
+								</IconButton>
+							</motion.div>
+
+							<motion.div whileHover={{ scale: 1 }}>
+								<Tooltip title="This link is under construction!">
+									<IconButton>
+										<TwitterIcon sx={{ fontSize: 30 }} />
+									</IconButton>
+								</Tooltip>
+							</motion.div>
+							<motion.div whileHover={{ scale: 1 }}>
+								<Tooltip title="This link is under construction!">
+									<IconButton>
+										<InstagramIcon sx={{ fontSize: 30 }} />
+									</IconButton>
+								</Tooltip>
+							</motion.div>
+							<motion.div
+								key="social-media-link-home"
+								className="social-media-link-home"
+								whileHover={{ scale: 1.5 }}
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{
+									scale: 0,
+									transition: { duration: 0.5 }
+								}}
+								transition={{ duration: 0.5 }}>
+								<IconButton component={Link} to="/">
+									<HomeIcon
+										color="info"
+										sx={{ fontSize: 50 }}
+									/>
+								</IconButton>
+							</motion.div>
+						</Box>
+					</Divider>
+				</Grid>
+				<Box sx={{ position: 'absolute', bottom: 5 }}>
+					<Fade in={trigger}>
+						<Fab
+							onClick={() => ref.current?.scrollTo(0)}
+							sx={{ marginBottom: 4 }}>
+							<KeyboardArrowUpIcon fontSize="large" />
+						</Fab>
+					</Fade>
+				</Box>
 			</Box>
 		</Box>
 	);

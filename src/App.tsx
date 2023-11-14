@@ -19,7 +19,6 @@ function App() {
 					height: '100%',
 					zIndex: 1
 				}}>
-				<SocialMediaLinks />
 				<AnimatePresence initial={false} mode="wait">
 					<Routes key={location.pathname} location={location}>
 						<Route index element={<Home />} />

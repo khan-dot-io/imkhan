@@ -134,8 +134,8 @@ const SocialMediaLinks = () => {
 						<IconButton
 							component={Link}
 							to="/"
-							sx={{ color: 'whitesmoke' }}>
-							<HomeIcon sx={{ fontSize: 50 }} />
+							sx={{ color: 'black' }}>
+							<HomeIcon sx={{ fontSize: 50, color: 'black' }} />
 						</IconButton>
 					</motion.div>
 				</Box>
