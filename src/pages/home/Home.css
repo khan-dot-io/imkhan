@@ -1,0 +1,22 @@
+.home-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2rem;
+}
+.home-terminal-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+.home-lear-more {
+	margin-bottom: 5rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}

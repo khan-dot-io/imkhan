@@ -1,0 +1,13 @@
+{
+	"prettier.printWidth": 120,
+	"prettier.tabWidth": 4,
+	"prettier.trailingComma": "none",
+	"prettier.useTabs": true,
+	"prettier.jsxSingleQuote": true,
+	"prettier.prettierPath": "",
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.singleAttributePerLine": true,
+	"prettier.singleQuote": true,
+	"prettier.configPath": ".prettierrc.json"
+}
