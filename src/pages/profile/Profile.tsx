@@ -600,7 +600,7 @@ const Profile = () => {
 						orientation="vertical"
 						sx={{
 							'&::before, &::after': {
-								borderColor: 'black'
+								borderColor: '#0288d1'
 							}
 						}}>
 						<Box
@@ -615,7 +615,10 @@ const Profile = () => {
 									onClick={(
 										event: MouseEvent<HTMLButtonElement>
 									) => handleIconClick(event, 'phone')}>
-									<PhoneIcon sx={{ fontSize: 30 }} />
+									<PhoneIcon
+										sx={{ fontSize: 40 }}
+										color="info"
+									/>
 								</IconButton>
 								<Popover
 									open={open}
@@ -637,7 +640,10 @@ const Profile = () => {
 									onClick={(
 										event: MouseEvent<HTMLButtonElement>
 									) => handleIconClick(event, 'email')}>
-									<EmailIcon sx={{ fontSize: 30 }} />
+									<EmailIcon
+										sx={{ fontSize: 30 }}
+										color="info"
+									/>
 								</IconButton>
 							</motion.div>
 							<motion.div whileHover={{ scale: 1.3 }}>
@@ -645,7 +651,10 @@ const Profile = () => {
 									LinkComponent="a"
 									target="blank"
 									href="https://www.linkedin.com/in/khan-io/">
-									<LinkedInIcon sx={{ fontSize: 30 }} />
+									<LinkedInIcon
+										sx={{ fontSize: 40 }}
+										color="info"
+									/>
 								</IconButton>
 							</motion.div>
 							<motion.div whileHover={{ scale: 1.3 }}>
@@ -653,21 +662,30 @@ const Profile = () => {
 									LinkComponent="a"
 									target="blank"
 									href="https://github.com/khan-develops">
-									<GitHubIcon sx={{ fontSize: 30 }} />
+									<GitHubIcon
+										sx={{ fontSize: 40 }}
+										color="info"
+									/>
 								</IconButton>
 							</motion.div>
 
 							<motion.div whileHover={{ scale: 1 }}>
 								<Tooltip title="This link is under construction!">
 									<IconButton>
-										<TwitterIcon sx={{ fontSize: 30 }} />
+										<TwitterIcon
+											sx={{ fontSize: 40 }}
+											color="info"
+										/>
 									</IconButton>
 								</Tooltip>
 							</motion.div>
 							<motion.div whileHover={{ scale: 1 }}>
 								<Tooltip title="This link is under construction!">
 									<IconButton>
-										<InstagramIcon sx={{ fontSize: 30 }} />
+										<InstagramIcon
+											sx={{ fontSize: 40 }}
+											color="info"
+										/>
 									</IconButton>
 								</Tooltip>
 							</motion.div>
