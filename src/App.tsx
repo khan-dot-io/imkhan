@@ -4,7 +4,7 @@ import Home from './pages/home/Home';
 import Portfolio from './pages/profile/Profile';
 import { AnimatePresence, motion } from 'framer-motion';
 import background from './common/images/bgArrow.png';
-import terminalBlue from './common/images/terminalBlue.png';
+import bgLight from './common/images/bgLight.jpeg';
 import SocialMediaLinks from './components/socialMediaLinks/SocialMediaLinks';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
 			<motion.div
 				style={{
 					position: 'absolute',
-					backgroundImage: `url(${background})`,
+					backgroundImage: `url(${bgLight})`,
 					backgroundSize: 'cover',
 					height: '100%',
 					zIndex: 0

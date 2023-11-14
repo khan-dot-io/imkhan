@@ -1,10 +1,34 @@
-import { Box, Button, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	CardMedia,
+	Divider,
+	Typography
+} from '@mui/material';
 import { useState } from 'react';
-import Typewriter from 'typewriter-effect';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import terminalGreen from '../../common/images/terminalGreen.png';
+import signature from '../../common/images/signature.png';
+import Typewriter from 'typewriter-effect';
+import { ThemeProvider, createTheme } from '@mui/material';
+
 import './Home.css';
+import { Link } from 'react-router-dom';
+
+const theme = createTheme({
+	typography: {
+		fontFamily: [
+			'Major Mono Display',
+			'monospace',
+			'Quicksand',
+			'sans-serif',
+			'Sulphur Point',
+			'sans-serif'
+		].join(',')
+	}
+});
 
 const Home = () => {
 	const name = '> Hello, my name is Khan.';
@@ -13,17 +37,104 @@ const Home = () => {
 	const [buttonColor, setButtonColor] = useState<string>('');
 
 	return (
-		<motion.div
-			key="home-terminal-key"
-			className="home-terminal-container"
-			initial={{ y: '50%', opacity: 0, scale: 0 }}
-			animate={{ y: 0, opacity: 1, scale: 1 }}
-			exit={{
-				opacity: 0,
-				transition: { duration: 0.3 }
-			}}
-			transition={{ duration: 0.7 }}>
-			<motion.div
+		<ThemeProvider theme={theme}>
+			<motion.div className="container">
+				<Card
+					sx={{
+						background: 'none',
+						paddingLeft: '30%',
+						paddingBottom: '10%'
+					}}
+					raised={false}
+					elevation={0}>
+					<CardMedia
+						component="img"
+						image={signature}
+						sx={{ marginBottom: 2 }}
+					/>
+					<Divider variant="fullWidth" />
+					<CardContent>
+						<Typography variant="h4">Software Engineer</Typography>
+					</CardContent>
+					<CardActions
+						sx={{
+							marginTop: 10,
+							width: '100%',
+							display: 'flex',
+							justifyContent: 'center'
+						}}>
+						<motion.div
+							key="home-learn-more"
+							className="home-lear-more"
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 1.5 }}
+							animate={{ scale: 1 }}>
+							<Button
+								variant="outlined"
+								size="large"
+								component={Link}
+								to="/my-profile"
+								color="warning">
+								{'< Learn more about me />'}
+							</Button>
+						</motion.div>
+					</CardActions>
+				</Card>
+
+				{/* <Box>
+				<Typography variant="h4" color="#39ff14">
+					<Typewriter
+						onInit={(typewriter) => {
+							typewriter
+								.typeString(name)
+								.changeDelay(80)
+								.start()
+								.callFunction((instance) => {
+									setTitle("> I'm a software engineer and");
+									instance.elements.cursor.style.display =
+										'none';
+								});
+						}}
+						options={{
+							delay: 50
+						}}
+					/>
+				</Typography>
+				{title && (
+					<Typography variant="h4" color="#39ff14">
+						<Typewriter
+							onInit={(typewriter) => {
+								typewriter
+									.typeString(title)
+									.start()
+									.callFunction((instance) => {
+										setAchievement(
+											'> AWS Certified Cloud Practitioner.'
+										);
+										instance.elements.cursor.style.display =
+											'none';
+									});
+							}}
+							options={{
+								delay: 50
+							}}
+						/>
+					</Typography>
+				)}
+				{achievement && (
+					<Typography variant="h4" color="#39ff14">
+						<Typewriter
+							onInit={(typewriter) => {
+								typewriter.typeString(achievement).start();
+							}}
+							options={{
+								delay: 50
+							}}
+						/>
+					</Typography>
+				)}
+			</Box> */}
+				{/* <motion.div
 				initial={{ scale: 1 }}
 				whileHover={{
 					border: '3px solid rgba(255,255,255,.3)',
@@ -41,68 +152,9 @@ const Home = () => {
 
 					height: '900px',
 					width: '900px'
-				}}>
-				<Box
-					sx={{
-						paddingTop: 20,
-						paddingLeft: 5,
-						paddingRight: 5
-					}}>
-					<Typography variant="h4" color="#39ff14">
-						<Typewriter
-							onInit={(typewriter) => {
-								typewriter
-									.typeString(name)
-									.changeDelay(80)
-									.start()
-									.callFunction((instance) => {
-										setTitle(
-											"> I'm a software engineer and"
-										);
-										instance.elements.cursor.style.display =
-											'none';
-									});
-							}}
-							options={{
-								delay: 50
-							}}
-						/>
-					</Typography>
-					{title && (
-						<Typography variant="h4" color="#39ff14">
-							<Typewriter
-								onInit={(typewriter) => {
-									typewriter
-										.typeString(title)
-										.start()
-										.callFunction((instance) => {
-											setAchievement(
-												'> AWS Certified Cloud Practitioner.'
-											);
-											instance.elements.cursor.style.display =
-												'none';
-										});
-								}}
-								options={{
-									delay: 50
-								}}
-							/>
-						</Typography>
-					)}
-					{achievement && (
-						<Typography variant="h4" color="#39ff14">
-							<Typewriter
-								onInit={(typewriter) => {
-									typewriter.typeString(achievement).start();
-								}}
-								options={{
-									delay: 50
-								}}
-							/>
-						</Typography>
-					)}
-				</Box>
-				<motion.div
+				}}> */}
+
+				{/* <motion.div
 					key="home-learn-more"
 					className="home-lear-more"
 					whileHover={{ color: '#39ff14' }}
@@ -118,9 +170,9 @@ const Home = () => {
 						color="warning">
 						{'< Learn more about me />'}
 					</Button>
-				</motion.div>
-			</motion.div>
-			{/* <Box
+				</motion.div> */}
+				{/* </motion.div> */}
+				{/* <Box
 				sx={{
 					border: '8px solid black',
 					borderRadius: 8,
@@ -213,7 +265,8 @@ const Home = () => {
 					</Grid>
 				</Box>
 			</Box> */}
-		</motion.div>
+			</motion.div>
+		</ThemeProvider>
 	);
 };
 

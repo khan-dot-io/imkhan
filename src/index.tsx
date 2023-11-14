@@ -9,13 +9,6 @@ import {
 	createBrowserRouter,
 	createRoutesFromElements
 } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material';
-
-const theme = createTheme({
-	typography: {
-		fontFamily: ['Roboto Mono', 'monospace'].join(',')
-	}
-});
 
 const router = createBrowserRouter(
 	createRoutesFromElements(<Route path="/*" element={<App />} />)
@@ -25,11 +18,9 @@ const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
 root.render(
-	<ThemeProvider theme={theme}>
-		<React.StrictMode>
-			<RouterProvider router={router} />
-		</React.StrictMode>
-	</ThemeProvider>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 );
 
 reportWebVitals();
