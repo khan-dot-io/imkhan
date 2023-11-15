@@ -27,11 +27,12 @@ export const myProfile = [
 ]
 
 export const colleges = [
+    { "year": "2023", "location": "Chicago", "name": "Amazon", "program": "AWS Cloud Practitioner Certificate" },
     {
-        "year": "2007",
-        'location': 'Ulaanbaatar Mongolia',
-        "name": "Mongolian University of Science and Technology",
-        "program": "Bachelor of Science"
+        "year": "2014",
+        'location': 'Bellevue WA',
+        "name": "Bellevue College",
+        "program": "Business Intelligence Developer Certificate Program"
     },
     {
         "year": "2012",
@@ -40,12 +41,11 @@ export const colleges = [
         "program": "Master of Business Administration with emphasis in technology management"
     },
     {
-        "year": "2014",
-        'location': 'Bellevue WA',
-        "name": "Bellevue College",
-        "program": "Business Intelligence Developer Certificate Program"
-    },
-    { "year": "2023", "location": "Chicago", "name": "Amazon", "program": "AWS Cloud Practitioner Certificate" }
+        "year": "2007",
+        'location': 'Ulaanbaatar Mongolia',
+        "name": "Mongolian University of Science and Technology",
+        "program": "Bachelor of Science"
+    }
 ]
 
 export const employers = [
@@ -53,10 +53,10 @@ export const employers = [
         "year": { "end": "2021", "start": "Present" }, "name": { label: "JPMorgan Chase & Co.", value: "chase" },
         "experiences": [
             {
-                "value": "Built an intranet site by using react. With new react hooks, built the site faster and cleaner without writing a class."
+                "value": "Created an experience layer application by using spring boot. ."
             },
             {
-                "value": "Implemented user interface employing React and Redux"
+                "value": "Learned custom UI framework in a short time"
             },
             {
                 "value": "Crafted Java classes to implement the Model View Control (MVC) architecture, using Spring Framework"

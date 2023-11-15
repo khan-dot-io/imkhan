@@ -35,7 +35,7 @@ function App() {
 					zIndex: 0
 				}}
 				animate={{
-					width: location.pathname === '/' ? '100%' : '700px'
+					width: location.pathname === '/' ? '100%' : '0'
 				}}
 				transition={{ duration: 1 }}
 			/>
