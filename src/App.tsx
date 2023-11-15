@@ -4,7 +4,7 @@ import Home from './pages/home/Home';
 import Portfolio from './pages/profile/Profile';
 import { AnimatePresence, motion } from 'framer-motion';
 import background from './common/images/bgArrow.png';
-import bgLight from './common/images/bgLight.jpeg';
+import bgLight from './common/images/bgLight.png';
 import SocialMediaLinks from './components/socialMediaLinks/SocialMediaLinks';
 
 function App() {
