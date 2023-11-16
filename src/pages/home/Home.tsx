@@ -1,4 +1,5 @@
 import {
+	Box,
 	Button,
 	Card,
 	CardActions,
@@ -31,12 +32,18 @@ const theme = createTheme({
 const Home = () => {
 	return (
 		<ThemeProvider theme={theme}>
-			<motion.div className="container">
+			<Box
+				sx={{
+					width: '100%',
+					height: '100%',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}>
 				<Card
 					sx={{
 						background: 'none',
-						paddingLeft: '30%',
-						paddingBottom: '10%'
+						paddingLeft: { md: '15%', lg: '20%', xl: '22%' }
 					}}
 					raised={false}
 					elevation={0}>
@@ -73,7 +80,7 @@ const Home = () => {
 						</motion.div>
 					</CardActions>
 				</Card>
-			</motion.div>
+			</Box>
 		</ThemeProvider>
 	);
 };

@@ -26,6 +26,7 @@ import {
 	Stepper,
 	Tooltip,
 	Typography,
+	useMediaQuery,
 	useScrollTrigger,
 	useTheme
 } from '@mui/material';
@@ -86,13 +87,13 @@ const certificates = [
 ];
 
 const Profile = () => {
+	const theme = useTheme();
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [container, setContainer] = useState<HTMLDivElement>();
 	const [completed, setCompleted] = useState<{
 		[k: number]: boolean;
 	}>({ 0: true });
 
-	const theme = useTheme();
 	const [activeImageStep, setActiveImageStep] = useState(0);
 	const maxSteps = certificates.length;
 
@@ -166,8 +167,7 @@ const Profile = () => {
 				ref={ref}
 				pages={4}
 				style={{
-					width: 'calc(100% - 70px)',
-					marginLeft: 70,
+					width: '100%',
 					position: 'absolute'
 				}}>
 				<motion.div
@@ -703,14 +703,26 @@ const Profile = () => {
 				</ParallaxLayer>
 			</Parallax>
 			<Box
-				position="absolute"
-				height="100%"
-				right={0}
-				display="flex"
-				flexDirection="column">
-				<Grid container height="100%">
+				sx={{
+					position: 'absolute',
+					height: '100%',
+					right: 0,
+					display: 'flex',
+					flexDirection: {
+						sx: 'row',
+						sm: 'row',
+						md: 'column',
+						lg: 'column',
+						xl: 'column'
+					}
+				}}>
+				<Grid container sx={{ width: { xs: '100%' }, height: '100%' }}>
 					<Divider
-						orientation="vertical"
+						orientation={
+							useMediaQuery(theme.breakpoints.down('md'))
+								? 'horizontal'
+								: 'vertical'
+						}
 						sx={{
 							'&::before, &::after': {
 								borderColor: '#0288d1'
@@ -719,8 +731,20 @@ const Profile = () => {
 						<Box
 							sx={{
 								display: 'flex',
-								gap: 2,
-								flexDirection: 'column'
+								gap: {
+									sx: 1,
+									sm: 1,
+									md: 1,
+									lg: 2,
+									xl: 2
+								},
+								flexDirection: {
+									sx: 'row',
+									sm: 'row',
+									md: 'column',
+									lg: 'column',
+									xl: 'column'
+								}
 							}}>
 							<motion.div whileHover={{ scale: 1.3 }}>
 								<IconButton
@@ -823,7 +847,12 @@ const Profile = () => {
 						</Box>
 					</Divider>
 				</Grid>
-				<Box sx={{ position: 'absolute', bottom: 5 }}>
+				<Box
+					sx={{
+						position: 'absolute',
+						bottom: 5,
+						display: { xs: 'none', sm: 'none' }
+					}}>
 					<Fade in={trigger}>
 						<Fab
 							onClick={() => ref.current?.scrollTo(0)}
