@@ -50,8 +50,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PhoneIcon from '@mui/icons-material/Phone';
 import HomeIcon from '@mui/icons-material/Home';
-import { AnimatePresence, motion } from 'framer-motion';
-import { wrap } from 'popmotion';
+import { motion } from 'framer-motion';
 import './Profile.css';
 import awsBadge from '../../common/images/certificates/awsBadge.png';
 import beginningSqlServer from '../../common/images/certificates/beginningSqlServer.png';
@@ -98,15 +97,15 @@ const Profile = () => {
 	const maxSteps = certificates.length;
 
 	const handleNext = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+		setActiveImageStep((prevActiveStep) => prevActiveStep + 1);
 	};
 
 	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+		setActiveImageStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
 	const handleStepChange = (step: number) => {
-		setActiveStep(step);
+		setActiveImageStep(step);
 	};
 
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -607,38 +606,33 @@ const Profile = () => {
 								display: 'flex',
 								justifyContent: 'center'
 							}}>
-							<Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-								<Paper
-									square
-									elevation={0}
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-										height: 50,
-										pl: 2,
-										bgcolor: 'background.default'
-									}}></Paper>
+							<Box sx={{ maxWidth: 600, flexGrow: 1 }}>
 								<AutoPlaySwipeableViews
 									axis={
 										theme.direction === 'rtl'
 											? 'x-reverse'
 											: 'x'
 									}
-									index={activeStep}
+									index={activeImageStep}
 									onChangeIndex={handleStepChange}
 									enableMouseEvents>
 									{certificates.map((certificate, index) => (
-										<div key={index}>
-											{Math.abs(activeStep - index) <=
-											2 ? (
+										<div
+											key={index}
+											style={{
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center'
+											}}>
+											{Math.abs(
+												activeImageStep - index
+											) <= 2 ? (
 												<Box
 													component="img"
 													sx={{
-														height: 255,
 														display: 'block',
-														maxWidth: 400,
-														overflow: 'hidden',
-														width: '100%'
+														maxWidth: 600,
+														overflow: 'hidden'
 													}}
 													src={certificate}
 													alt={'certificate'}
@@ -648,15 +642,16 @@ const Profile = () => {
 									))}
 								</AutoPlaySwipeableViews>
 								<MobileStepper
+									sx={{ background: 'none' }}
 									steps={maxSteps}
 									position="static"
-									activeStep={activeStep}
+									activeStep={activeImageStep}
 									nextButton={
 										<Button
 											size="small"
 											onClick={handleNext}
 											disabled={
-												activeStep === maxSteps - 1
+												activeImageStep === maxSteps - 1
 											}>
 											Next
 											{theme.direction === 'rtl' ? (
@@ -670,7 +665,7 @@ const Profile = () => {
 										<Button
 											size="small"
 											onClick={handleBack}
-											disabled={activeStep === 0}>
+											disabled={activeImageStep === 0}>
 											{theme.direction === 'rtl' ? (
 												<KeyboardArrowRight />
 											) : (
