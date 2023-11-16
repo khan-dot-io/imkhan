@@ -53,13 +53,28 @@ export const employers = [
         "year": { "end": "2021", "start": "Present" }, "name": { label: "JPMorgan Chase & Co.", value: "chase" },
         "experiences": [
             {
-                "value": "Created an experience layer application by using spring boot. ."
+                "value": "Implemented an API experience layer app by using spring boot technology to synchronize data across different services and integrate different products"
             },
             {
-                "value": "Learned custom UI framework in a short time"
+                "value": "Migrated an existing UI legacy code to its own independent block"
             },
             {
-                "value": "Crafted Java classes to implement the Model View Control (MVC) architecture, using Spring Framework"
+                "value": "Removed all the anti-patterns in UI"
+            },
+            {
+                "value": "Took the initiative to fix current production defects in our products"
+            },
+            {
+                "value": "Involved actively in release events outside business hours and on the weekends"
+            },
+            {
+                "value": "Increased test coverage to nearly 100%"
+            },
+            {
+                "value": "Volunteered to help new team members onboarding and learning"
+            },
+            {
+                "value": "Developed new product by using a react based framework and communicated with backend team to gathered requirements"
             }
         ]
     },

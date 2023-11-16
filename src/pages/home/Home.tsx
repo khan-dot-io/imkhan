@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	Card,
 	CardActions,
@@ -8,10 +7,8 @@ import {
 	Divider,
 	Typography
 } from '@mui/material';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import signature from '../../common/images/signature.png';
-import Typewriter from 'typewriter-effect';
 import { ThemeProvider, createTheme } from '@mui/material';
 
 import './Home.css';
@@ -32,11 +29,6 @@ const theme = createTheme({
 });
 
 const Home = () => {
-	const name = '> Hello, my name is Khan.';
-	const [title, setTitle] = useState<string>('');
-	const [achievement, setAchievement] = useState<string>('');
-	const [buttonColor, setButtonColor] = useState<string>('');
-
 	return (
 		<ThemeProvider theme={theme}>
 			<motion.div className="container">

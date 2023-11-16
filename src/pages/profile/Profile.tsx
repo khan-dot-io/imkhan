@@ -2,6 +2,7 @@ import { IParallax, Parallax, ParallaxLayer } from '@react-spring/parallax';
 import {
 	Avatar,
 	Box,
+	Button,
 	Card,
 	CardContent,
 	CardHeader,
@@ -15,6 +16,8 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
+	MobileStepper,
+	Paper,
 	Popover,
 	Step,
 	StepButton,
@@ -23,7 +26,8 @@ import {
 	Stepper,
 	Tooltip,
 	Typography,
-	useScrollTrigger
+	useScrollTrigger,
+	useTheme
 } from '@mui/material';
 import { useEffect, useRef, useState, MouseEvent } from 'react';
 import matrixLayer1 from '../../common/images/matrix-layer-1.png';
@@ -46,13 +50,41 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PhoneIcon from '@mui/icons-material/Phone';
 import HomeIcon from '@mui/icons-material/Home';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { wrap } from 'popmotion';
 import './Profile.css';
-import Skills from '../../components/skills/Skills';
+import awsBadge from '../../common/images/certificates/awsBadge.png';
+import beginningSqlServer from '../../common/images/certificates/beginningSqlServer.png';
+import databaseDesign from '../../common/images/certificates/databaseDesign.png';
+import splitLevel1 from '../../common/images/certificates/splitLevel1.png';
+import splitLevel2 from '../../common/images/certificates/splitLevel2.png';
+import sqlLevel1 from '../../common/images/certificates/sqlLevel1.png';
+import sqlLevel2 from '../../common/images/certificates/sqlLevel2.png';
+import sqlProgramming from '../../common/images/certificates/sqlProgramming.png';
+import sqlServerAnalysis from '../../common/images/certificates/sqlServerAnalysis.png';
+import sqlServerIntegration from '../../common/images/certificates/sqlServerIntegration.png';
+import sqlServerReporting from '../../common/images/certificates/sqlServerReporting.png';
 import { skills } from '../../common/content';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import SocialMediaLinks from '../../components/socialMediaLinks/SocialMediaLinks';
 import { Link } from 'react-router-dom';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const certificates = [
+	awsBadge,
+	beginningSqlServer,
+	databaseDesign,
+	splitLevel1,
+	splitLevel2,
+	sqlLevel1,
+	sqlLevel2,
+	sqlProgramming,
+	sqlServerAnalysis,
+	sqlServerIntegration,
+	sqlServerReporting
+];
 
 const Profile = () => {
 	const [activeStep, setActiveStep] = useState<number>(0);
@@ -60,6 +92,22 @@ const Profile = () => {
 	const [completed, setCompleted] = useState<{
 		[k: number]: boolean;
 	}>({ 0: true });
+
+	const theme = useTheme();
+	const [activeImageStep, setActiveImageStep] = useState(0);
+	const maxSteps = certificates.length;
+
+	const handleNext = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+	};
+
+	const handleBack = () => {
+		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+	};
+
+	const handleStepChange = (step: number) => {
+		setActiveStep(step);
+	};
 
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -521,9 +569,9 @@ const Profile = () => {
 					offset={2}
 					style={{
 						display: 'flex',
+						flexDirection: 'column',
 						justifyContent: 'center',
-						alignItems: 'center',
-						width: 'calc(100%-100px)'
+						alignItems: 'center'
 					}}>
 					<Card
 						sx={{
@@ -534,7 +582,7 @@ const Profile = () => {
 							background: 'linear-gradient(#e66465, #9198e5)'
 						}}>
 						<CardHeader
-							title="My Skills"
+							title="Skills and Achievements"
 							titleTypographyProps={{
 								color: 'white',
 								fontWeight: 900,
@@ -547,15 +595,92 @@ const Profile = () => {
 									variant="outlined"
 									sx={{
 										color: 'white',
-										fontSize: 24,
+										fontSize: 22,
 										margin: 2
 									}}
 								/>
 							))}
 						</CardContent>
 						<CardContent
-							sx={{ width: 'calc(100%-100px)', marginTop: 2 }}>
-							<Skills />
+							sx={{
+								position: 'relative',
+								display: 'flex',
+								justifyContent: 'center'
+							}}>
+							<Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+								<Paper
+									square
+									elevation={0}
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										height: 50,
+										pl: 2,
+										bgcolor: 'background.default'
+									}}></Paper>
+								<AutoPlaySwipeableViews
+									axis={
+										theme.direction === 'rtl'
+											? 'x-reverse'
+											: 'x'
+									}
+									index={activeStep}
+									onChangeIndex={handleStepChange}
+									enableMouseEvents>
+									{certificates.map((certificate, index) => (
+										<div key={index}>
+											{Math.abs(activeStep - index) <=
+											2 ? (
+												<Box
+													component="img"
+													sx={{
+														height: 255,
+														display: 'block',
+														maxWidth: 400,
+														overflow: 'hidden',
+														width: '100%'
+													}}
+													src={certificate}
+													alt={'certificate'}
+												/>
+											) : null}
+										</div>
+									))}
+								</AutoPlaySwipeableViews>
+								<MobileStepper
+									steps={maxSteps}
+									position="static"
+									activeStep={activeStep}
+									nextButton={
+										<Button
+											size="small"
+											onClick={handleNext}
+											disabled={
+												activeStep === maxSteps - 1
+											}>
+											Next
+											{theme.direction === 'rtl' ? (
+												<KeyboardArrowLeft />
+											) : (
+												<KeyboardArrowRight />
+											)}
+										</Button>
+									}
+									backButton={
+										<Button
+											size="small"
+											onClick={handleBack}
+											disabled={activeStep === 0}>
+											{theme.direction === 'rtl' ? (
+												<KeyboardArrowRight />
+											) : (
+												<KeyboardArrowLeft />
+											)}
+											Back
+										</Button>
+									}
+								/>
+							</Box>
 						</CardContent>
 					</Card>
 				</ParallaxLayer>
@@ -572,16 +697,9 @@ const Profile = () => {
 							width: 1000,
 							background: 'linear-gradient(#e66465, #9198e5)'
 						}}>
-						<CardHeader
-							title="About me"
-							titleTypographyProps={{
-								color: 'white',
-								fontWeight: 900,
-								fontSize: 24
-							}}></CardHeader>
 						<CardContent>
 							<Typography
-								sx={{ fontSize: 20, color: 'white' }}
+								sx={{ fontSize: 24, color: 'white' }}
 								gutterBottom>
 								{summary}
 							</Typography>
