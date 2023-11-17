@@ -25,7 +25,6 @@ import {
 	Toolbar,
 	Tooltip,
 	Typography,
-	createTheme,
 	useTheme
 } from '@mui/material';
 import { useState, MouseEvent, Fragment } from 'react';
@@ -54,7 +53,7 @@ import sqlProgramming from '../../common/images/certificates/sqlProgramming.png'
 import sqlServerAnalysis from '../../common/images/certificates/sqlServerAnalysis.png';
 import sqlServerIntegration from '../../common/images/certificates/sqlServerIntegration.png';
 import sqlServerReporting from '../../common/images/certificates/sqlServerReporting.png';
-import bluePurpleBg from '../../common/images/bluePurpleBg.png';
+import purpleBg from '../../common/images/purpleBg.png';
 import { skills } from '../../common/content';
 import { Link } from 'react-router-dom';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
@@ -238,23 +237,15 @@ const ProfileMobile = () => {
 					flexDirection: 'column',
 					gap: 4,
 					padding: 2,
-					background: `url(${bluePurpleBg})`
+					background: `url(${purpleBg})`
 				}}>
 				<Paper sx={{ background: 'none' }} elevation={24}>
 					<CardHeader
 						title="Experience"
 						titleTypographyProps={{
 							color: 'white',
-							fontWeight: {
-								xs: 500,
-								sm: 500,
-								md: 700
-							},
-							fontSize: {
-								xs: 20,
-								sm: 20,
-								md: 22
-							}
+							fontWeight: 900,
+							fontSize: 22
 						}}
 					/>
 					<Divider
@@ -288,20 +279,8 @@ const ProfileMobile = () => {
 											<Typography
 												sx={{
 													color: 'white',
-													fontWeight: {
-														xs: 500,
-														sm: 500,
-														md: 700,
-														lg: 900,
-														xl: 900
-													},
-													fontSize: {
-														xs: 16,
-														sm: 16,
-														md: 20,
-														lg: 24,
-														xl: 24
-													}
+													fontWeight: 900,
+													fontSize: 16
 												}}>
 												{employer.name.label}
 											</Typography>
@@ -324,13 +303,8 @@ const ProfileMobile = () => {
 																experience.value
 															}
 															primaryTypographyProps={{
-																fontSize: {
-																	xs: 12,
-																	sm: 12,
-																	md: 16,
-																	lg: 20,
-																	xl: 20
-																}
+																fontSize: 12,
+																fontWeight: 900
 															}}></ListItemText>
 													</ListItem>
 												)
@@ -348,16 +322,8 @@ const ProfileMobile = () => {
 						title="Education"
 						titleTypographyProps={{
 							color: 'white',
-							fontWeight: {
-								xs: 500,
-								sm: 500,
-								md: 700
-							},
-							fontSize: {
-								xs: 20,
-								sm: 20,
-								md: 22
-							}
+							fontWeight: 900,
+							fontSize: 20
 						}}></CardHeader>
 					<CardContent>
 						<List>
@@ -370,7 +336,8 @@ const ProfileMobile = () => {
 												justifyContent="space-between">
 												<Grid item>{college.name}</Grid>
 												<Grid item>
-													<Typography>
+													<Typography
+														fontWeight={900}>
 														{college.location}
 													</Typography>
 												</Grid>
@@ -379,20 +346,13 @@ const ProfileMobile = () => {
 										secondary={college.program}
 										primaryTypographyProps={{
 											color: 'white',
-											fontWeight: {
-												xs: 500,
-												sm: 500,
-												md: 700
-											},
-											fontSize: {
-												xs: 16,
-												sm: 16,
-												md: 20
-											}
+											fontWeight: 900,
+											fontSize: 16
 										}}
 										secondaryTypographyProps={{
 											color: 'white',
-											fontSize: 18
+											fontSize: 18,
+											fontWeight: 900
 										}}
 									/>
 								</ListItem>
@@ -405,29 +365,40 @@ const ProfileMobile = () => {
 						title="Skills and Achievements"
 						titleTypographyProps={{
 							color: 'white',
-							fontWeight: {
-								xs: 500,
-								sm: 500,
-								md: 700
-							},
-							fontSize: {
-								xs: 16,
-								sm: 16,
-								md: 20
-							}
+							fontWeight: 900,
+							fontSize: 16
 						}}></CardHeader>
 					<CardContent>
-						{skills.map((skill) => (
-							<Chip
-								label={skill}
-								variant="outlined"
-								sx={{
-									color: 'white',
-									fontSize: 22,
-									margin: 2
-								}}
-							/>
-						))}
+						<Grid
+							container
+							width="100%"
+							justifyContent="center"
+							gap={4}
+							marginBottom={4}>
+							{skills.map((skill) => (
+								<Grid item>
+									<motion.div
+										className="box"
+										whileHover={{
+											scale: 1.1
+										}}
+										transition={{
+											type: 'spring',
+											stiffness: 400,
+											damping: 10
+										}}>
+										<Typography
+											sx={{
+												color: 'gray',
+												fontSize: 24,
+												fontWeight: 900
+											}}>
+											{skill}
+										</Typography>
+									</motion.div>
+								</Grid>
+							))}
+						</Grid>
 					</CardContent>
 					<CardContent
 						sx={{
@@ -459,7 +430,7 @@ const ProfileMobile = () => {
 												component="img"
 												sx={{
 													display: 'block',
-													maxWidth: 600,
+													maxWidth: '90%',
 													overflow: 'hidden'
 												}}
 												src={certificate}
@@ -513,11 +484,8 @@ const ProfileMobile = () => {
 					<CardContent>
 						<Typography
 							sx={{
-								fontSize: {
-									xs: 20,
-									sm: 20,
-									md: 22
-								},
+								fontSize: 20,
+								fontWeight: 900,
 								color: 'white'
 							}}
 							gutterBottom>

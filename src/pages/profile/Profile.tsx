@@ -24,8 +24,10 @@ import {
 	StepContent,
 	StepLabel,
 	Stepper,
+	ThemeProvider,
 	Tooltip,
 	Typography,
+	createTheme,
 	useMediaQuery,
 	useScrollTrigger,
 	useTheme
@@ -64,11 +66,7 @@ import sqlProgramming from '../../common/images/certificates/sqlProgramming.png'
 import sqlServerAnalysis from '../../common/images/certificates/sqlServerAnalysis.png';
 import sqlServerIntegration from '../../common/images/certificates/sqlServerIntegration.png';
 import sqlServerReporting from '../../common/images/certificates/sqlServerReporting.png';
-import cardBg from '../../common/images/cardBg.png';
-import goldBg from '../../common/images/goldBg.png';
-import bluePurpleBg from '../../common/images/bluePurpleBg.png';
-import bluePinkBg from '../../common/images/bluePinkBg.png';
-import blackBg from '../../common/images/blackBg.png';
+import purpleBg from '../../common/images/purpleBg.png';
 import { skills } from '../../common/content';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
@@ -91,6 +89,12 @@ const certificates = [
 	sqlServerIntegration,
 	sqlServerReporting
 ];
+
+const themeCreate = createTheme({
+	typography: {
+		fontFamily: ['Work Sans', 'sans-serif'].join(',')
+	}
+});
 
 const ContactLinks = (): JSX.Element => {
 	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -269,7 +273,7 @@ const Profile = () => {
 	});
 
 	return (
-		<Fragment>
+		<ThemeProvider theme={themeCreate}>
 			{matches ? (
 				<ProfileMobile />
 			) : (
@@ -546,46 +550,16 @@ const Profile = () => {
 							}}>
 							<Card
 								sx={{
-									padding: {
-										md: 5,
-										lg: 7,
-										xl: 7
-									},
-									marginLeft: {
-										xs: 1,
-										sm: 1
-									},
-									marginRight: {
-										xs: 1,
-										sm: 1
-									},
-									width: {
-										xs: '100%',
-										sm: '100%',
-										md: '80%',
-										lg: 900,
-										xl: 900
-									},
-									background: `url(${bluePurpleBg})`
+									padding: 5,
+									width: '70%',
+									background: `url(${purpleBg})`
 								}}>
 								<CardHeader
 									title="Experience"
 									titleTypographyProps={{
 										color: 'white',
-										fontWeight: {
-											xs: 500,
-											sm: 500,
-											md: 700,
-											lg: 900,
-											xl: 900
-										},
-										fontSize: {
-											xs: 20,
-											sm: 20,
-											md: 22,
-											lg: 24,
-											xl: 24
-										}
+										fontWeight: 900,
+										fontSize: 24
 									}}
 								/>
 								<CardContent
@@ -617,20 +591,8 @@ const Profile = () => {
 														<Typography
 															sx={{
 																color: 'white',
-																fontWeight: {
-																	xs: 500,
-																	sm: 500,
-																	md: 700,
-																	lg: 900,
-																	xl: 900
-																},
-																fontSize: {
-																	xs: 16,
-																	sm: 16,
-																	md: 20,
-																	lg: 24,
-																	xl: 24
-																}
+																fontWeight: 900,
+																fontSize: 24
 															}}>
 															{
 																employer.name
@@ -656,14 +618,8 @@ const Profile = () => {
 																			experience.value
 																		}
 																		primaryTypographyProps={{
-																			fontSize:
-																				{
-																					xs: 12,
-																					sm: 12,
-																					md: 16,
-																					lg: 20,
-																					xl: 20
-																				}
+																			fontSize: 20,
+																			fontWeight: 900
 																		}}></ListItemText>
 																</ListItem>
 															)
@@ -685,46 +641,16 @@ const Profile = () => {
 							}}>
 							<Card
 								sx={{
-									padding: {
-										md: 5,
-										lg: 7,
-										xl: 7
-									},
-									marginLeft: {
-										xs: 1,
-										sm: 1
-									},
-									marginRight: {
-										xs: 1,
-										sm: 1
-									},
-									width: {
-										xs: '100%',
-										sm: '100%',
-										md: '80%',
-										lg: 900,
-										xl: 900
-									},
-									background: `url(${bluePurpleBg})`
+									padding: 5,
+									width: '70%',
+									background: `url(${purpleBg})`
 								}}>
 								<CardHeader
 									title="Education"
 									titleTypographyProps={{
 										color: 'white',
-										fontWeight: {
-											xs: 500,
-											sm: 500,
-											md: 700,
-											lg: 900,
-											xl: 900
-										},
-										fontSize: {
-											xs: 20,
-											sm: 20,
-											md: 22,
-											lg: 24,
-											xl: 24
-										}
+										fontWeight: 900,
+										fontSize: 24
 									}}></CardHeader>
 								<CardContent sx={{ paddingTop: 2 }}>
 									<List>
@@ -740,15 +666,11 @@ const Profile = () => {
 															</Grid>
 															<Grid
 																item
-																sx={{
-																	lg: {
-																		marginTop: 1
-																	},
-																	xl: {
-																		marginTop: 1
-																	}
-																}}>
-																<Typography>
+																marginTop={2}>
+																<Typography
+																	fontWeight={
+																		900
+																	}>
 																	{
 																		college.location
 																	}
@@ -759,23 +681,12 @@ const Profile = () => {
 													secondary={college.program}
 													primaryTypographyProps={{
 														color: 'white',
-														fontWeight: {
-															xs: 500,
-															sm: 500,
-															md: 700,
-															lg: 900,
-															xl: 900
-														},
-														fontSize: {
-															xs: 16,
-															sm: 16,
-															md: 20,
-															lg: 24,
-															xl: 24
-														}
+														fontWeight: 900,
+														fontSize: 24
 													}}
 													secondaryTypographyProps={{
 														color: 'white',
+														fontWeight: 900,
 														fontSize: 18
 													}}
 												/>
@@ -795,60 +706,50 @@ const Profile = () => {
 							}}>
 							<Card
 								sx={{
-									padding: {
-										md: 5,
-										lg: 7,
-										xl: 7
-									},
-									marginLeft: {
-										xs: 1,
-										sm: 1
-									},
-									marginRight: {
-										xs: 1,
-										sm: 1
-									},
-									width: {
-										xs: '100%',
-										sm: '100%',
-										md: '80%',
-										lg: 900,
-										xl: 900
-									},
-									background: `url(${bluePurpleBg})`
+									padding: 5,
+									width: '70%',
+									background: `url(${purpleBg})`
 								}}>
 								<CardHeader
 									title="Skills and Achievements"
 									titleTypographyProps={{
 										color: 'white',
-										fontWeight: {
-											xs: 500,
-											sm: 500,
-											md: 700,
-											lg: 900,
-											xl: 900
-										},
-										fontSize: {
-											xs: 16,
-											sm: 16,
-											md: 20,
-											lg: 24,
-											xl: 24
-										}
+										fontWeight: 900,
+										fontSize: 24
 									}}></CardHeader>
-								<CardContent>
-									{skills.map((skill) => (
-										<Chip
-											label={skill}
-											variant="outlined"
-											sx={{
-												color: 'white',
-												fontSize: 22,
-												margin: 2
-											}}
-										/>
-									))}
+								<CardContent sx={{ width: '100%' }}>
+									<Grid
+										container
+										width="100%"
+										justifyContent="center"
+										gap={4}
+										marginBottom={4}>
+										{skills.map((skill) => (
+											<Grid item>
+												<motion.div
+													className="box"
+													whileHover={{
+														scale: 1.1
+													}}
+													transition={{
+														type: 'spring',
+														stiffness: 400,
+														damping: 10
+													}}>
+													<Typography
+														sx={{
+															color: 'gray',
+															fontSize: 24,
+															fontWeight: 900
+														}}>
+														{skill}
+													</Typography>
+												</motion.div>
+											</Grid>
+										))}
+									</Grid>
 								</CardContent>
+
 								<CardContent
 									sx={{
 										position: 'relative',
@@ -907,6 +808,10 @@ const Profile = () => {
 											activeStep={activeImageStep}
 											nextButton={
 												<Button
+													sx={{
+														color: 'white',
+														fontWeight: 900
+													}}
 													size="small"
 													onClick={handleNext}
 													disabled={
@@ -924,6 +829,10 @@ const Profile = () => {
 											}
 											backButton={
 												<Button
+													sx={{
+														color: 'white',
+														fontWeight: 900
+													}}
 													size="small"
 													onClick={handleBack}
 													disabled={
@@ -952,38 +861,15 @@ const Profile = () => {
 							}}>
 							<Card
 								sx={{
-									padding: {
-										md: 5,
-										lg: 7,
-										xl: 7
-									},
-									marginLeft: {
-										xs: 1,
-										sm: 1
-									},
-									marginRight: {
-										xs: 1,
-										sm: 1
-									},
-									width: {
-										xs: '100%',
-										sm: '100%',
-										md: '80%',
-										lg: 900,
-										xl: 900
-									},
-									background: `url(${bluePurpleBg})`
+									padding: 5,
+									width: '70%',
+									background: `url(${purpleBg})`
 								}}>
 								<CardContent>
 									<Typography
 										sx={{
-											fontSize: {
-												xs: 20,
-												sm: 20,
-												md: 22,
-												lg: 24,
-												xl: 24
-											},
+											fontSize: 24,
+											fontWeight: 900,
 											color: 'white'
 										}}
 										gutterBottom>
@@ -996,27 +882,15 @@ const Profile = () => {
 					<Box
 						sx={{
 							position: 'absolute',
-							height: { lg: '100%', xl: '100%' },
+							height: '100%',
 							right: 0,
 							display: 'flex',
-							flexDirection: {
-								sx: 'row',
-								sm: 'row',
-								md: 'column',
-								lg: 'column',
-								xl: 'column'
-							}
+							flexDirection: 'column'
 						}}>
 						<Box
 							sx={{
 								height: '100%',
-								display: {
-									xs: 'none',
-									sm: 'none',
-									md: 'none',
-									lg: 'flex',
-									xl: 'flex'
-								}
+								display: 'flex'
 							}}>
 							<Divider
 								orientation="vertical"
@@ -1045,7 +919,7 @@ const Profile = () => {
 					</Box>
 				</motion.div>
 			)}
-		</Fragment>
+		</ThemeProvider>
 	);
 };
 

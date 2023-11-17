@@ -74,7 +74,7 @@ export const employers = [
                 "value": "Volunteered to help new team members onboarding and learning"
             },
             {
-                "value": "Developed new product by using a react based framework and communicated with backend team to gathered requirements"
+                "value": "Developed new product by using a react based framework and communicated with backend team to gather requirements"
             }
         ]
     },
