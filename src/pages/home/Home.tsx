@@ -64,7 +64,6 @@ const Home = () => {
 								sx={{ marginBottom: 2 }}
 							/>
 						</motion.div>
-
 						<Divider variant="fullWidth" />
 						<CardActions
 							sx={{
