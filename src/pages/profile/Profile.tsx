@@ -30,7 +30,7 @@ import {
 	useScrollTrigger,
 	useTheme
 } from '@mui/material';
-import { useEffect, useRef, useState, MouseEvent } from 'react';
+import { useEffect, useRef, useState, MouseEvent, Fragment } from 'react';
 import matrixLayer1 from '../../common/images/matrix-layer-1.png';
 import matrixLayer2 from '../../common/images/matrix-layer-2.png';
 import matrixLayer3 from '../../common/images/matrix-layer-3.png';
@@ -64,12 +64,18 @@ import sqlProgramming from '../../common/images/certificates/sqlProgramming.png'
 import sqlServerAnalysis from '../../common/images/certificates/sqlServerAnalysis.png';
 import sqlServerIntegration from '../../common/images/certificates/sqlServerIntegration.png';
 import sqlServerReporting from '../../common/images/certificates/sqlServerReporting.png';
+import cardBg from '../../common/images/cardBg.png';
+import goldBg from '../../common/images/goldBg.png';
+import bluePurpleBg from '../../common/images/bluePurpleBg.png';
+import bluePinkBg from '../../common/images/bluePinkBg.png';
+import blackBg from '../../common/images/blackBg.png';
 import { skills } from '../../common/content';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Link } from 'react-router-dom';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import ProfileMobile from '../../mobile/profile/ProfileMobile';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const certificates = [
@@ -86,8 +92,131 @@ const certificates = [
 	sqlServerReporting
 ];
 
+const ContactLinks = (): JSX.Element => {
+	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+	const open = Boolean(anchorEl);
+	const handleIconClick = (
+		event: MouseEvent<HTMLButtonElement>,
+		iconType: 'phone' | 'email'
+	) => {
+		if (iconType === 'phone') {
+			navigator.clipboard.writeText('2063721407');
+		}
+		if (iconType === 'email') {
+			navigator.clipboard.writeText('u.batsaikhan@gmail.com');
+		}
+		setAnchorEl(event?.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const id = open ? 'popover' : undefined;
+
+	return (
+		<Box
+			sx={{
+				width: { xs: '100%', sm: '100%' },
+				display: 'flex',
+				gap: {
+					sx: 1,
+					sm: 1,
+					md: 1,
+					lg: 2,
+					xl: 2
+				},
+				flexDirection: {
+					xs: 'row',
+					sm: 'row',
+					md: 'column',
+					lg: 'column',
+					xl: 'column'
+				}
+			}}>
+			<motion.div whileHover={{ scale: 1.3 }}>
+				<IconButton
+					aria-describedby={id}
+					onClick={(event: MouseEvent<HTMLButtonElement>) =>
+						handleIconClick(event, 'phone')
+					}>
+					<PhoneIcon sx={{ fontSize: 40 }} color="info" />
+				</IconButton>
+				<Popover
+					open={open}
+					id={id}
+					anchorEl={anchorEl}
+					onClose={handleClose}
+					anchorOrigin={{
+						vertical: 'center',
+						horizontal: 'right'
+					}}>
+					<Typography sx={{ p: 1 }}>Copied!</Typography>
+				</Popover>
+			</motion.div>
+			<motion.div whileHover={{ scale: 1.3 }}>
+				<IconButton
+					aria-describedby={id}
+					onClick={(event: MouseEvent<HTMLButtonElement>) =>
+						handleIconClick(event, 'email')
+					}>
+					<EmailIcon sx={{ fontSize: 30 }} color="info" />
+				</IconButton>
+			</motion.div>
+			<motion.div whileHover={{ scale: 1.3 }}>
+				<IconButton
+					LinkComponent="a"
+					target="blank"
+					href="https://www.linkedin.com/in/khan-io/">
+					<LinkedInIcon sx={{ fontSize: 40 }} color="info" />
+				</IconButton>
+			</motion.div>
+			<motion.div whileHover={{ scale: 1.3 }}>
+				<IconButton
+					LinkComponent="a"
+					target="blank"
+					href="https://github.com/khan-develops">
+					<GitHubIcon sx={{ fontSize: 40 }} color="info" />
+				</IconButton>
+			</motion.div>
+
+			<motion.div whileHover={{ scale: 1 }}>
+				<Tooltip title="This link is under construction!">
+					<IconButton>
+						<TwitterIcon sx={{ fontSize: 40 }} color="info" />
+					</IconButton>
+				</Tooltip>
+			</motion.div>
+			<motion.div whileHover={{ scale: 1 }}>
+				<Tooltip title="This link is under construction!">
+					<IconButton>
+						<InstagramIcon sx={{ fontSize: 40 }} color="info" />
+					</IconButton>
+				</Tooltip>
+			</motion.div>
+			<motion.div
+				key="social-media-link-home"
+				className="social-media-link-home"
+				whileHover={{ scale: 1.5 }}
+				initial={{ scale: 0 }}
+				animate={{ scale: 1 }}
+				exit={{
+					scale: 0,
+					transition: { duration: 0.5 }
+				}}
+				transition={{ duration: 0.5 }}>
+				<IconButton component={Link} to="/">
+					<HomeIcon color="info" sx={{ fontSize: 50 }} />
+				</IconButton>
+			</motion.div>
+		</Box>
+	);
+};
+
 const Profile = () => {
 	const theme = useTheme();
+	const matches: boolean = useMediaQuery(theme.breakpoints.down('md'));
 	const [activeStep, setActiveStep] = useState<number>(0);
 	const [container, setContainer] = useState<HTMLDivElement>();
 	const [completed, setCompleted] = useState<{
@@ -108,28 +237,6 @@ const Profile = () => {
 	const handleStepChange = (step: number) => {
 		setActiveImageStep(step);
 	};
-
-	const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-	const handleIconClick = (
-		event: MouseEvent<HTMLButtonElement>,
-		iconType: 'phone' | 'email'
-	) => {
-		if (iconType === 'phone') {
-			navigator.clipboard.writeText('2063721407');
-		}
-		if (iconType === 'email') {
-			navigator.clipboard.writeText('u.batsaikhan@gmail.com');
-		}
-		setAnchorEl(event?.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
-
-	const open = Boolean(anchorEl);
-	const id = open ? 'popover' : undefined;
 
 	const ref = useRef<IParallax>(null);
 
@@ -162,707 +269,779 @@ const Profile = () => {
 	});
 
 	return (
-		<Box>
-			<Parallax
-				ref={ref}
-				pages={4}
-				style={{
-					width: '100%',
-					position: 'absolute'
-				}}>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1 }}>
-					<ParallaxLayer
-						offset={0}
-						speed={0.5}
-						factor={3}
+		<Fragment>
+			{matches ? (
+				<ProfileMobile />
+			) : (
+				<Box>
+					<Parallax
+						ref={ref}
+						pages={4}
 						style={{
-							backgroundImage: `url(${matrixLayer1})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1.1 }}>
-					<ParallaxLayer
-						offset={0}
-						speed={1}
-						factor={1}
-						style={{
-							backgroundImage: `url(${matrixLayer2})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1.2 }}>
-					<ParallaxLayer
-						offset={0.7}
-						speed={1.5}
-						factor={2}
-						style={{
-							backgroundImage: `url(${matrixLayer3})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1.3 }}>
-					<ParallaxLayer
-						offset={0.9}
-						speed={2}
-						factor={0.5}
-						style={{
-							backgroundImage: `url(${matrixLayer4})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1.1 }}>
-					<ParallaxLayer
-						offset={0.1}
-						speed={2.5}
-						factor={2}
-						style={{
-							backgroundImage: `url(${matrixLayer5})`,
-							backgroundSize: 'contain'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 0.9 }}>
-					<ParallaxLayer
-						offset={1.2}
-						speed={3}
-						factor={2}
-						style={{
-							backgroundImage: `url(${matrixLayer6})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 0.8 }}>
-					<ParallaxLayer
-						offset={0.5}
-						speed={0.5}
-						factor={-4}
-						style={{
-							backgroundImage: `url(${matrixLayer1})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 0.7 }}>
-					<ParallaxLayer
-						offset={0.7}
-						speed={1}
-						factor={-1.5}
-						style={{
-							backgroundImage: `url(${matrixLayer2})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 0.1 }}>
-					<ParallaxLayer
-						offset={0.9}
-						speed={1.5}
-						factor={-2}
-						style={{
-							backgroundImage: `url(${matrixLayer3})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.1 }
-					}}
-					transition={{ duration: 0.1 }}>
-					<ParallaxLayer
-						offset={2.5}
-						speed={2}
-						factor={-1.5}
-						style={{
-							backgroundImage: `url(${matrixLayer4})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.1 }
-					}}
-					transition={{ duration: 0.1 }}>
-					<ParallaxLayer
-						offset={0.4}
-						speed={1.5}
-						factor={-0.6}
-						style={{
-							backgroundImage: `url(${matrixLayer5})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.1 }
-					}}
-					transition={{ duration: 0.1 }}>
-					<ParallaxLayer
-						offset={1}
-						speed={3}
-						factor={-2.5}
-						style={{
-							backgroundImage: `url(${matrixLayer6})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 0.9 }}>
-					<ParallaxLayer
-						offset={0.4}
-						speed={4}
-						factor={-0.6}
-						style={{
-							backgroundImage: `url(${matrix1})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<motion.div
-					initial={{ scaleY: 0 }}
-					animate={{ scaleY: 1 }}
-					exit={{
-						scaleY: 0,
-						transition: { duration: 0.5 }
-					}}
-					transition={{ duration: 1 }}>
-					<ParallaxLayer
-						offset={1.9}
-						speed={1}
-						factor={2}
-						style={{
-							backgroundImage: `url(${matrix2})`,
-							backgroundSize: 'cover'
-						}}
-					/>
-				</motion.div>
-				<ParallaxLayer
-					offset={0}
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}>
-					<Card
-						sx={{
-							padding: 4,
-							width: 1000,
-							background: 'linear-gradient(#e66465, #9198e5)'
+							width: '100%',
+							position: 'absolute'
 						}}>
-						<CardHeader
-							title="Experience"
-							titleTypographyProps={{
-								color: 'white',
-								fontWeight: 900,
-								fontSize: 24
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
 							}}
-						/>
-						<CardContent
-							sx={{
-								overflowY: 'auto',
-								height: 'auto',
-								marginBottom: 2
+							transition={{ duration: 1 }}>
+							<ParallaxLayer
+								offset={0}
+								speed={0.5}
+								factor={3}
+								style={{
+									backgroundImage: `url(${matrixLayer1})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 1.1 }}>
+							<ParallaxLayer
+								offset={0}
+								speed={1}
+								factor={1}
+								style={{
+									backgroundImage: `url(${matrixLayer2})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 1.2 }}>
+							<ParallaxLayer
+								offset={0.7}
+								speed={1.5}
+								factor={2}
+								style={{
+									backgroundImage: `url(${matrixLayer3})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 1.3 }}>
+							<ParallaxLayer
+								offset={0.9}
+								speed={2}
+								factor={0.5}
+								style={{
+									backgroundImage: `url(${matrixLayer4})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 1.1 }}>
+							<ParallaxLayer
+								offset={0.1}
+								speed={2.5}
+								factor={2}
+								style={{
+									backgroundImage: `url(${matrixLayer5})`,
+									backgroundSize: 'contain'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 0.9 }}>
+							<ParallaxLayer
+								offset={1.2}
+								speed={3}
+								factor={2}
+								style={{
+									backgroundImage: `url(${matrixLayer6})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 0.8 }}>
+							<ParallaxLayer
+								offset={0.5}
+								speed={0.5}
+								factor={-4}
+								style={{
+									backgroundImage: `url(${matrixLayer1})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 0.7 }}>
+							<ParallaxLayer
+								offset={0.7}
+								speed={1}
+								factor={-1.5}
+								style={{
+									backgroundImage: `url(${matrixLayer2})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 0.1 }}>
+							<ParallaxLayer
+								offset={0.9}
+								speed={1.5}
+								factor={-2}
+								style={{
+									backgroundImage: `url(${matrixLayer3})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.1 }
+							}}
+							transition={{ duration: 0.1 }}>
+							<ParallaxLayer
+								offset={2.5}
+								speed={2}
+								factor={-1.5}
+								style={{
+									backgroundImage: `url(${matrixLayer4})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.1 }
+							}}
+							transition={{ duration: 0.1 }}>
+							<ParallaxLayer
+								offset={0.4}
+								speed={1.5}
+								factor={-0.6}
+								style={{
+									backgroundImage: `url(${matrixLayer5})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.1 }
+							}}
+							transition={{ duration: 0.1 }}>
+							<ParallaxLayer
+								offset={1}
+								speed={3}
+								factor={-2.5}
+								style={{
+									backgroundImage: `url(${matrixLayer6})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 0.9 }}>
+							<ParallaxLayer
+								offset={0.4}
+								speed={4}
+								factor={-0.6}
+								style={{
+									backgroundImage: `url(${matrix1})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<motion.div
+							initial={{ scaleY: 0 }}
+							animate={{ scaleY: 1 }}
+							exit={{
+								scaleY: 0,
+								transition: { duration: 0.5 }
+							}}
+							transition={{ duration: 1 }}>
+							<ParallaxLayer
+								offset={1.9}
+								speed={1}
+								factor={2}
+								style={{
+									backgroundImage: `url(${matrix2})`,
+									backgroundSize: 'cover'
+								}}
+							/>
+						</motion.div>
+						<ParallaxLayer
+							offset={0}
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center'
 							}}>
-							<Stepper
-								activeStep={activeStep}
-								nonLinear
-								orientation="vertical"
-								sx={{ color: 'white' }}>
-								{employers.map((employer, index) => (
-									<Step
-										key={index}
-										completed={completed[index]}>
-										<StepButton
-											onClick={() => handleStep(index)}>
-											<StepLabel
-												StepIconComponent={() =>
-													EmployerLogo(
-														employer.name.value
-													)
-												}>
-												<Typography
-													sx={{
-														fontSize: 24,
-														color: 'white',
-														fontWeight: 900
-													}}>
-													{employer.name.label}
-												</Typography>
-											</StepLabel>
-										</StepButton>
-										<StepContent>
-											<List>
-												{employer.experiences?.map(
-													(experience) => (
-														<ListItem>
-															<ListItemIcon>
-																<KeyboardArrowRightIcon
-																	sx={{
-																		color: 'white'
-																	}}
-																/>
-															</ListItemIcon>
-															<ListItemText
-																primary={
-																	experience.value
-																}
-																primaryTypographyProps={{
-																	fontSize: 20
-																}}></ListItemText>
-														</ListItem>
-													)
-												)}
-											</List>
-										</StepContent>
-									</Step>
-								))}
-							</Stepper>
-						</CardContent>
-					</Card>
-				</ParallaxLayer>
-				<ParallaxLayer
-					offset={1}
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}>
-					<Card
-						sx={{
-							padding: 4,
-							width: 1000,
-							background: 'linear-gradient(#e66465, #9198e5)'
-						}}>
-						<CardHeader
-							title="Education"
-							titleTypographyProps={{
-								color: 'white',
-								fontWeight: 900,
-								fontSize: 24
-							}}></CardHeader>
-						<CardContent sx={{ paddingTop: 2 }}>
-							<List>
-								{colleges.map((college) => (
-									<ListItem>
-										<ListItemText
-											primary={
-												<Grid
-													container
-													justifyContent="space-between">
-													<Grid item>
-														{college.name}
-													</Grid>
-													<Grid
-														item
-														sx={{ marginTop: 1 }}>
-														<Typography>
-															{college.location}
-														</Typography>
-													</Grid>
-												</Grid>
-											}
-											secondary={college.program}
-											primaryTypographyProps={{
-												fontWeight: 700,
-												color: 'white',
-												fontSize: 22
-											}}
-											secondaryTypographyProps={{
-												color: 'white',
-												fontSize: 18
-											}}
-										/>
-									</ListItem>
-								))}
-							</List>
-						</CardContent>
-					</Card>
-				</ParallaxLayer>
-				<ParallaxLayer
-					offset={2}
-					style={{
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}>
-					<Card
-						sx={{
-							paddingTop: 4,
-							paddingLeft: 4,
-							paddingRight: 4,
-							width: 1000,
-							background: 'linear-gradient(#e66465, #9198e5)'
-						}}>
-						<CardHeader
-							title="Skills and Achievements"
-							titleTypographyProps={{
-								color: 'white',
-								fontWeight: 900,
-								fontSize: 24
-							}}></CardHeader>
-						<CardContent>
-							{skills.map((skill) => (
-								<Chip
-									label={skill}
-									variant="outlined"
-									sx={{
+							<Card
+								sx={{
+									padding: {
+										md: 5,
+										lg: 7,
+										xl: 7
+									},
+									marginLeft: {
+										xs: 1,
+										sm: 1
+									},
+									marginRight: {
+										xs: 1,
+										sm: 1
+									},
+									width: {
+										xs: '100%',
+										sm: '100%',
+										md: '80%',
+										lg: 900,
+										xl: 900
+									},
+									background: `url(${bluePurpleBg})`
+								}}>
+								<CardHeader
+									title="Experience"
+									titleTypographyProps={{
 										color: 'white',
-										fontSize: 22,
-										margin: 2
+										fontWeight: {
+											xs: 500,
+											sm: 500,
+											md: 700,
+											lg: 900,
+											xl: 900
+										},
+										fontSize: {
+											xs: 20,
+											sm: 20,
+											md: 22,
+											lg: 24,
+											xl: 24
+										}
 									}}
 								/>
-							))}
-						</CardContent>
-						<CardContent
-							sx={{
-								position: 'relative',
+								<CardContent
+									sx={{
+										overflowY: 'auto',
+										height: 'auto',
+										marginBottom: 2
+									}}>
+									<Stepper
+										activeStep={activeStep}
+										nonLinear
+										orientation="vertical"
+										sx={{ color: 'white' }}>
+										{employers.map((employer, index) => (
+											<Step
+												key={index}
+												completed={completed[index]}>
+												<StepButton
+													onClick={() =>
+														handleStep(index)
+													}>
+													<StepLabel
+														StepIconComponent={() =>
+															EmployerLogo(
+																employer.name
+																	.value
+															)
+														}>
+														<Typography
+															sx={{
+																color: 'white',
+																fontWeight: {
+																	xs: 500,
+																	sm: 500,
+																	md: 700,
+																	lg: 900,
+																	xl: 900
+																},
+																fontSize: {
+																	xs: 16,
+																	sm: 16,
+																	md: 20,
+																	lg: 24,
+																	xl: 24
+																}
+															}}>
+															{
+																employer.name
+																	.label
+															}
+														</Typography>
+													</StepLabel>
+												</StepButton>
+												<StepContent>
+													<List>
+														{employer.experiences?.map(
+															(experience) => (
+																<ListItem>
+																	<ListItemIcon>
+																		<KeyboardArrowRightIcon
+																			sx={{
+																				color: 'white'
+																			}}
+																		/>
+																	</ListItemIcon>
+																	<ListItemText
+																		primary={
+																			experience.value
+																		}
+																		primaryTypographyProps={{
+																			fontSize:
+																				{
+																					xs: 12,
+																					sm: 12,
+																					md: 16,
+																					lg: 20,
+																					xl: 20
+																				}
+																		}}></ListItemText>
+																</ListItem>
+															)
+														)}
+													</List>
+												</StepContent>
+											</Step>
+										))}
+									</Stepper>
+								</CardContent>
+							</Card>
+						</ParallaxLayer>
+						<ParallaxLayer
+							offset={1}
+							style={{
 								display: 'flex',
-								justifyContent: 'center'
+								justifyContent: 'center',
+								alignItems: 'center'
 							}}>
-							<Box sx={{ maxWidth: 600, flexGrow: 1 }}>
-								<AutoPlaySwipeableViews
-									axis={
-										theme.direction === 'rtl'
-											? 'x-reverse'
-											: 'x'
-									}
-									index={activeImageStep}
-									onChangeIndex={handleStepChange}
-									enableMouseEvents>
-									{certificates.map((certificate, index) => (
-										<div
-											key={index}
-											style={{
-												display: 'flex',
-												justifyContent: 'center',
-												alignItems: 'center'
-											}}>
-											{Math.abs(
-												activeImageStep - index
-											) <= 2 ? (
-												<Box
-													component="img"
-													sx={{
-														display: 'block',
-														maxWidth: 600,
-														overflow: 'hidden'
+							<Card
+								sx={{
+									padding: {
+										md: 5,
+										lg: 7,
+										xl: 7
+									},
+									marginLeft: {
+										xs: 1,
+										sm: 1
+									},
+									marginRight: {
+										xs: 1,
+										sm: 1
+									},
+									width: {
+										xs: '100%',
+										sm: '100%',
+										md: '80%',
+										lg: 900,
+										xl: 900
+									},
+									background: `url(${bluePurpleBg})`
+								}}>
+								<CardHeader
+									title="Education"
+									titleTypographyProps={{
+										color: 'white',
+										fontWeight: {
+											xs: 500,
+											sm: 500,
+											md: 700,
+											lg: 900,
+											xl: 900
+										},
+										fontSize: {
+											xs: 20,
+											sm: 20,
+											md: 22,
+											lg: 24,
+											xl: 24
+										}
+									}}></CardHeader>
+								<CardContent sx={{ paddingTop: 2 }}>
+									<List>
+										{colleges.map((college) => (
+											<ListItem>
+												<ListItemText
+													primary={
+														<Grid
+															container
+															justifyContent="space-between">
+															<Grid item>
+																{college.name}
+															</Grid>
+															<Grid
+																item
+																sx={{
+																	lg: {
+																		marginTop: 1
+																	},
+																	xl: {
+																		marginTop: 1
+																	}
+																}}>
+																<Typography>
+																	{
+																		college.location
+																	}
+																</Typography>
+															</Grid>
+														</Grid>
+													}
+													secondary={college.program}
+													primaryTypographyProps={{
+														color: 'white',
+														fontWeight: {
+															xs: 500,
+															sm: 500,
+															md: 700,
+															lg: 900,
+															xl: 900
+														},
+														fontSize: {
+															xs: 16,
+															sm: 16,
+															md: 20,
+															lg: 24,
+															xl: 24
+														}
 													}}
-													src={certificate}
-													alt={'certificate'}
+													secondaryTypographyProps={{
+														color: 'white',
+														fontSize: 18
+													}}
 												/>
-											) : null}
-										</div>
+											</ListItem>
+										))}
+									</List>
+								</CardContent>
+							</Card>
+						</ParallaxLayer>
+						<ParallaxLayer
+							offset={2}
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}>
+							<Card
+								sx={{
+									padding: {
+										md: 5,
+										lg: 7,
+										xl: 7
+									},
+									marginLeft: {
+										xs: 1,
+										sm: 1
+									},
+									marginRight: {
+										xs: 1,
+										sm: 1
+									},
+									width: {
+										xs: '100%',
+										sm: '100%',
+										md: '80%',
+										lg: 900,
+										xl: 900
+									},
+									background: `url(${bluePurpleBg})`
+								}}>
+								<CardHeader
+									title="Skills and Achievements"
+									titleTypographyProps={{
+										color: 'white',
+										fontWeight: {
+											xs: 500,
+											sm: 500,
+											md: 700,
+											lg: 900,
+											xl: 900
+										},
+										fontSize: {
+											xs: 16,
+											sm: 16,
+											md: 20,
+											lg: 24,
+											xl: 24
+										}
+									}}></CardHeader>
+								<CardContent>
+									{skills.map((skill) => (
+										<Chip
+											label={skill}
+											variant="outlined"
+											sx={{
+												color: 'white',
+												fontSize: 22,
+												margin: 2
+											}}
+										/>
 									))}
-								</AutoPlaySwipeableViews>
-								<MobileStepper
-									sx={{ background: 'none' }}
-									steps={maxSteps}
-									position="static"
-									activeStep={activeImageStep}
-									nextButton={
-										<Button
-											size="small"
-											onClick={handleNext}
-											disabled={
-												activeImageStep === maxSteps - 1
-											}>
-											Next
-											{theme.direction === 'rtl' ? (
-												<KeyboardArrowLeft />
-											) : (
-												<KeyboardArrowRight />
+								</CardContent>
+								<CardContent
+									sx={{
+										position: 'relative',
+										display: 'flex',
+										justifyContent: 'center'
+									}}>
+									<Box sx={{ maxWidth: 600, flexGrow: 1 }}>
+										<AutoPlaySwipeableViews
+											axis={
+												theme.direction === 'rtl'
+													? 'x-reverse'
+													: 'x'
+											}
+											index={activeImageStep}
+											onChangeIndex={handleStepChange}
+											enableMouseEvents>
+											{certificates.map(
+												(certificate, index) => (
+													<div
+														key={index}
+														style={{
+															display: 'flex',
+															justifyContent:
+																'center',
+															alignItems: 'center'
+														}}>
+														{Math.abs(
+															activeImageStep -
+																index
+														) <= 2 ? (
+															<Box
+																component="img"
+																sx={{
+																	display:
+																		'block',
+																	maxWidth: 600,
+																	overflow:
+																		'hidden'
+																}}
+																src={
+																	certificate
+																}
+																alt={
+																	'certificate'
+																}
+															/>
+														) : null}
+													</div>
+												)
 											)}
-										</Button>
-									}
-									backButton={
-										<Button
-											size="small"
-											onClick={handleBack}
-											disabled={activeImageStep === 0}>
-											{theme.direction === 'rtl' ? (
-												<KeyboardArrowRight />
-											) : (
-												<KeyboardArrowLeft />
-											)}
-											Back
-										</Button>
-									}
-								/>
-							</Box>
-						</CardContent>
-					</Card>
-				</ParallaxLayer>
-				<ParallaxLayer
-					offset={3}
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}>
-					<Card
+										</AutoPlaySwipeableViews>
+										<MobileStepper
+											sx={{ background: 'none' }}
+											steps={maxSteps}
+											position="static"
+											activeStep={activeImageStep}
+											nextButton={
+												<Button
+													size="small"
+													onClick={handleNext}
+													disabled={
+														activeImageStep ===
+														maxSteps - 1
+													}>
+													Next
+													{theme.direction ===
+													'rtl' ? (
+														<KeyboardArrowLeft />
+													) : (
+														<KeyboardArrowRight />
+													)}
+												</Button>
+											}
+											backButton={
+												<Button
+													size="small"
+													onClick={handleBack}
+													disabled={
+														activeImageStep === 0
+													}>
+													{theme.direction ===
+													'rtl' ? (
+														<KeyboardArrowRight />
+													) : (
+														<KeyboardArrowLeft />
+													)}
+													Back
+												</Button>
+											}
+										/>
+									</Box>
+								</CardContent>
+							</Card>
+						</ParallaxLayer>
+						<ParallaxLayer
+							offset={3}
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}>
+							<Card
+								sx={{
+									padding: {
+										md: 5,
+										lg: 7,
+										xl: 7
+									},
+									marginLeft: {
+										xs: 1,
+										sm: 1
+									},
+									marginRight: {
+										xs: 1,
+										sm: 1
+									},
+									width: {
+										xs: '100%',
+										sm: '100%',
+										md: '80%',
+										lg: 900,
+										xl: 900
+									},
+									background: `url(${bluePurpleBg})`
+								}}>
+								<CardContent>
+									<Typography
+										sx={{
+											fontSize: {
+												xs: 20,
+												sm: 20,
+												md: 22,
+												lg: 24,
+												xl: 24
+											},
+											color: 'white'
+										}}
+										gutterBottom>
+										{summary}
+									</Typography>
+								</CardContent>
+							</Card>
+						</ParallaxLayer>
+					</Parallax>
+					<Box
 						sx={{
-							padding: 4,
-							width: 1000,
-							background: 'linear-gradient(#e66465, #9198e5)'
-						}}>
-						<CardContent>
-							<Typography
-								sx={{ fontSize: 24, color: 'white' }}
-								gutterBottom>
-								{summary}
-							</Typography>
-						</CardContent>
-					</Card>
-				</ParallaxLayer>
-			</Parallax>
-			<Box
-				sx={{
-					position: 'absolute',
-					height: '100%',
-					right: 0,
-					display: 'flex',
-					flexDirection: {
-						sx: 'row',
-						sm: 'row',
-						md: 'column',
-						lg: 'column',
-						xl: 'column'
-					}
-				}}>
-				<Grid container sx={{ width: { xs: '100%' }, height: '100%' }}>
-					<Divider
-						orientation={
-							useMediaQuery(theme.breakpoints.down('md'))
-								? 'horizontal'
-								: 'vertical'
-						}
-						sx={{
-							'&::before, &::after': {
-								borderColor: '#0288d1'
+							position: 'absolute',
+							height: { lg: '100%', xl: '100%' },
+							right: 0,
+							display: 'flex',
+							flexDirection: {
+								sx: 'row',
+								sm: 'row',
+								md: 'column',
+								lg: 'column',
+								xl: 'column'
 							}
 						}}>
 						<Box
 							sx={{
-								display: 'flex',
-								gap: {
-									sx: 1,
-									sm: 1,
-									md: 1,
-									lg: 2,
-									xl: 2
-								},
-								flexDirection: {
-									sx: 'row',
-									sm: 'row',
-									md: 'column',
-									lg: 'column',
-									xl: 'column'
+								height: '100%',
+								display: {
+									xs: 'none',
+									sm: 'none',
+									md: 'none',
+									lg: 'flex',
+									xl: 'flex'
 								}
 							}}>
-							<motion.div whileHover={{ scale: 1.3 }}>
-								<IconButton
-									aria-describedby={id}
-									onClick={(
-										event: MouseEvent<HTMLButtonElement>
-									) => handleIconClick(event, 'phone')}>
-									<PhoneIcon
-										sx={{ fontSize: 40 }}
-										color="info"
-									/>
-								</IconButton>
-								<Popover
-									open={open}
-									id={id}
-									anchorEl={anchorEl}
-									onClose={handleClose}
-									anchorOrigin={{
-										vertical: 'center',
-										horizontal: 'right'
-									}}>
-									<Typography sx={{ p: 1 }}>
-										Copied!
-									</Typography>
-								</Popover>
-							</motion.div>
-							<motion.div whileHover={{ scale: 1.3 }}>
-								<IconButton
-									aria-describedby={id}
-									onClick={(
-										event: MouseEvent<HTMLButtonElement>
-									) => handleIconClick(event, 'email')}>
-									<EmailIcon
-										sx={{ fontSize: 30 }}
-										color="info"
-									/>
-								</IconButton>
-							</motion.div>
-							<motion.div whileHover={{ scale: 1.3 }}>
-								<IconButton
-									LinkComponent="a"
-									target="blank"
-									href="https://www.linkedin.com/in/khan-io/">
-									<LinkedInIcon
-										sx={{ fontSize: 40 }}
-										color="info"
-									/>
-								</IconButton>
-							</motion.div>
-							<motion.div whileHover={{ scale: 1.3 }}>
-								<IconButton
-									LinkComponent="a"
-									target="blank"
-									href="https://github.com/khan-develops">
-									<GitHubIcon
-										sx={{ fontSize: 40 }}
-										color="info"
-									/>
-								</IconButton>
-							</motion.div>
-
-							<motion.div whileHover={{ scale: 1 }}>
-								<Tooltip title="This link is under construction!">
-									<IconButton>
-										<TwitterIcon
-											sx={{ fontSize: 40 }}
-											color="info"
-										/>
-									</IconButton>
-								</Tooltip>
-							</motion.div>
-							<motion.div whileHover={{ scale: 1 }}>
-								<Tooltip title="This link is under construction!">
-									<IconButton>
-										<InstagramIcon
-											sx={{ fontSize: 40 }}
-											color="info"
-										/>
-									</IconButton>
-								</Tooltip>
-							</motion.div>
-							<motion.div
-								key="social-media-link-home"
-								className="social-media-link-home"
-								whileHover={{ scale: 1.5 }}
-								initial={{ scale: 0 }}
-								animate={{ scale: 1 }}
-								exit={{
-									scale: 0,
-									transition: { duration: 0.5 }
-								}}
-								transition={{ duration: 0.5 }}>
-								<IconButton component={Link} to="/">
-									<HomeIcon
-										color="info"
-										sx={{ fontSize: 50 }}
-									/>
-								</IconButton>
-							</motion.div>
+							<Divider
+								orientation="vertical"
+								sx={{
+									'&::before, &::after': {
+										borderColor: '#0288d1'
+									}
+								}}>
+								<ContactLinks />
+							</Divider>
 						</Box>
-					</Divider>
-				</Grid>
-				<Box
-					sx={{
-						position: 'absolute',
-						bottom: 5,
-						display: { xs: 'none', sm: 'none' }
-					}}>
-					<Fade in={trigger}>
-						<Fab
-							onClick={() => ref.current?.scrollTo(0)}
-							sx={{ marginBottom: 4 }}>
-							<KeyboardArrowUpIcon fontSize="large" />
-						</Fab>
-					</Fade>
+						<Box
+							sx={{
+								position: 'absolute',
+								bottom: 20,
+								right: 60
+							}}>
+							<Fade in={trigger}>
+								<Fab
+									onClick={() => ref.current?.scrollTo(0)}
+									sx={{ marginBottom: 4 }}>
+									<KeyboardArrowUpIcon fontSize="large" />
+								</Fab>
+							</Fade>
+						</Box>
+					</Box>
 				</Box>
-			</Box>
-		</Box>
+			)}
+		</Fragment>
 	);
 };
 
