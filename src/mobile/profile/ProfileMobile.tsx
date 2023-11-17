@@ -373,8 +373,8 @@ const ProfileMobile = () => {
 							container
 							width="100%"
 							justifyContent="center"
-							gap={4}
-							marginBottom={4}>
+							gap={2}
+							marginBottom={2}>
 							{skills.map((skill) => (
 								<Grid item>
 									<motion.div
@@ -390,7 +390,7 @@ const ProfileMobile = () => {
 										<Typography
 											sx={{
 												color: 'gray',
-												fontSize: 24,
+												fontSize: 20,
 												fontWeight: 900
 											}}>
 											{skill}
